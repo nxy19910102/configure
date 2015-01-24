@@ -1,0 +1,122 @@
+jdk jdk-8u25-windows-x64
+  修改环境变量
+    JAVA_HOME
+      jdk目录
+    PATH
+      jdk目录\bin
+    CLASS_PATH
+      jdk目录\lib
+      
+**************************************************
+
+apache httpd-2.4.10-win64-VC11
+  修改配置文件./conf/httpd.conf
+  (37)修改--ServerRoot Apache的根路径
+ServerRoot "c:/Apache24"
+  改为
+ServerRoot "C:/green_software/Apache24"
+  (58)修改--端口号（可以不改）
+Listen 80
+  (218)修改--主机名称
+#ServerName www.example.com:80
+  改为
+ServerName www.example.com:80
+	(242)修改--主文件夹目录
+DocumentRoot "c:/Apache24/htdocs"
+<Directory "c:/Apache24/htdocs">
+	改为
+DocumentRoot "D:/talent_path/Apache"
+<Directory "D:/talent_path/Apache">
+	(276)修改--入口文件配置
+DirectoryIndex index.html
+	改为
+DirectoryIndex  index.php index.htm index.html
+	(359)修改--serverscript目录
+ScriptAlias /cgi-bin/ "c:/Apache24/cgi-bin/"
+	改为
+ScriptAlias /cgi-bin/ "C:/green_software/Apache24/cgi-bin"
+	(375)修改
+<Directory "c:/Apache24/cgi-bin">
+	改为
+<Directory "C:/green_software/Apache24/cgi-bin">
+	(263)禁用客户端查看目录
+Options Indexes FollowSymLinks
+  改为
+#Options Indexes FollowSymLinks
+Options None
+	添加系统服务,cmd窗口执行
+    cd /d C:\green_software\Apache24\bin\
+    httpd.exe -k install -n "Apache24"
+  //卸载服务
+    httpd.exe -k uninstall -n "Apache24"
+
+	添加对php5的支持
+# php5 support
+LoadModule php5_module C:/green_software/php-5.6.5-Win32-VC11-x64/php5apache2_4.dll
+AddType application/x-httpd-php .php .html .htm
+# configure the path to php.ini
+PHPIniDir "C:/green_software/php-5.6.5-Win32-VC11-x64"
+  
+  整合Apache与Tomcat
+    下载mod_jk:http://archive.apache.org/dist/tomcat/tomcat-connectors/jk/binaries/linux/jk-1.2.31/x86_64/mod_jk-1.2.31-httpd-2.2.x.so
+    至C:\green_software\Apache24\modules
+  配置文件里添加
+LoadModule jk_module modules/mod_jk-1.2.31-httpd-2.2.3.so
+JKWorkersFile conf/workers.properties
+JkLogFile logs/mod_jk.log
+<VirtualHost *>
+ServerAdmin localhost
+DocumentRoot d:/www/
+ServerName localhost
+DirectoryIndex index.html index.htm index.jsp index.action
+ErrorLog logs/shsc-error_log.txt
+CustomLog logs/shsc-access_log.txt common
+JkMount /*WEB-INF ajp13
+JkMount /*j_spring_security_check ajp13
+JkMount /*.action ajp13
+JkMount /servlet/* ajp13
+JkMount /*.jsp ajp13
+JkMount /*.do ajp13
+JkMount /*.action ajp13
+JkMount /*fckeditor/editor/filemanager/connectors/*.* ajp13
+JkMount /fckeditor/editor/filemanager/connectors/* ajp13
+</VirtualHost>
+  在./conf下新建workers.properties输入以下内容
+workers.tomcat_home=C:/green_software/apache-tomcat-8.0.17
+workers.java_home=D:/Program Files/Java/jdk1.8.0_25
+ps=/
+worker.list=ajp13
+worker.ajp13.port=8009
+worker.ajp13.host=localhost
+worker.ajp13.type=ajp13
+      
+**************************************************
+
+tomcat apache-tomcat-8.0.17
+  添加环境变量PATH
+    TOMCAT_HOME
+      C:\green_software\apache-tomcat-8.0.17
+
+**************************************************
+
+php-5.5.15-Win32-VC11-x86
+  php.ini-development重命名为php.ini
+  在apache配置文件中添加php5支持（见apache）
+  添加环境变量PATH
+    C:\green_software\php-5.6.5-Win32-VC11-x64;C:\green_software\php-5.6.5-Win32-VC11-x64\ext;
+  修改php.ini
+    ; On windows:
+		; extension_dir = "ext"
+	改为
+		; On windows:
+		extension_dir = "C:/green_software/php-5.6.5-Win32-VC11-x64/ext"
+	(927)修改时区
+		;date.timezone =
+	改为
+	  date.timezone = Asia/Shanghai
+	(891)添加MySQL扩展
+	  ;extension=php_mysql.dll
+    ;extension=php_mysqli.dll
+  改为
+    extension=php_mysql.dll
+    extension=php_mysqli.dll
