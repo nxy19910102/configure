@@ -120,3 +120,10 @@ php-5.5.15-Win32-VC11-x86
   改为
     extension=php_mysql.dll
     extension=php_mysqli.dll
+
+**************************************************
+
+ecilipse
+  通过tomcat启动后，在下面servers里remove项目，右击tomcat选择open，在serve locations选择tomcat installation，将deploy path指向tomcat wepapps目录保存，实现项目备份到tomcat里
+  修改content="text/html; charset=utf-8">
+  body里写request.setCharacterEncoding("utf-8")解决中文乱码
