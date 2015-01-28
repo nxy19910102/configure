@@ -98,6 +98,8 @@ tomcat apache-tomcat-8.0.17
       C:\green_software\apache-tomcat-8.0.17
   (63)Connector里添加--解决URL中文乱码
     URIEncoding="utf-8"
+  (511)设置session超时时间（分钟)
+<session-timeout>30</session-timeout>
 
 **************************************************
 
@@ -128,4 +130,6 @@ php-5.5.15-Win32-VC11-x86
 ecilipse
   通过tomcat启动后，在下面servers里remove项目，右击tomcat选择open，在serve locations选择tomcat installation，将deploy path指向tomcat wepapps目录保存，实现项目备份到tomcat里
   修改content="text/html; charset=utf-8">
+  windows--prefences--general--workspace--text file encoding--other--utf-8
+  windows--prefences--general--content types--text--java source file--default encoding输入utf-8,点update
   body里写request.setCharacterEncoding("utf-8")解决中文乱码
