@@ -133,3 +133,11 @@ ecilipse
   windows--prefences--general--workspace--text file encoding--other--utf-8
   windows--prefences--general--content types--text--java source file--default encoding输入utf-8,点update
   body里写request.setCharacterEncoding("utf-8")解决中文乱码
+
+**************************************************
+
+myeclipse
+  window--prefences--java--installed JREs--add 添加JDK目录
+  window--prefences--myeclipse--servers--tomcat 选择相应tomcat服务器，配置根目录和JDK
+  windows--prefences--general--workspace--text file encoding--other--utf-8
+  windows--prefences--general--content types--text--java source file--default encoding输入utf-8,点update
